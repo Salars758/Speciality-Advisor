@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speciality Консультант - Администрирование Результатов</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style_admin_page.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            Speciality
+            <span>КОНСУЛЬТАНТ</span>
+        </div>
+        <nav class="nav" id="main-nav">
+            <a href="index.html" class="page-link">Главная</a>
+            <div class="dropdown-container" id="admin-dropdown" style="display:none;">
+                <a href="#" class="nav-link">Администрирование</a>
+                <div class="dropdown-menu">
+                    <a href="administrate_specialization.html" class="dropdown-item page-link">Специальности</a>
+                    <a href="administrate_traits.html" class="dropdown-item page-link">Качества</a>
+                    <a href="administrate_tests.html" class="dropdown-item page-link">Тесты</a>
+                    <a href="administrate_questions.html" class="dropdown-item page-link">Вопросы</a>
+                    <a href="administrate_answeroptions.html" class="dropdown-item page-link">Варианты ответов</a>
+                    <a href="administrate_specializationstraits.html" class="dropdown-item page-link">Требования к
+                        качествам</a>
+                    <a href="administrate_sessions.html" class="dropdown-item page-link">Сессии</a>
+                    <a href="administrate_useranswers.html" class="dropdown-item page-link">Ответы пользователей</a>
+                    <a href="administrate_testresults.html" class="dropdown-item page-link">Результаты</a>
+                    <a href="administrate_users.html" class="dropdown-item page-link">Пользователи</a>
+                </div>
+            </div>
+            <a href="specializations.html" class="page-link">Специальности</a>
+            <a href="about.html" class="page-link">О нас</a>
+            <div class="dropdown-container" id="account-dropdown">
+                <a href="#" class="nav-link" id="account-btn">Личный кабинет</a>
+                <div class="dropdown-menu">
+                    <a href="profile.html" class="dropdown-item page-link">Профиль</a>
+                    <a href="statistics.html" class="dropdown-item page-link">Статистика</a>
+                    <a href="#" class="dropdown-item" id="logout-btn">Выход</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">АДМИНИСТРИРОВАНИЕ | РЕЗУЛЬТАТЫ</h1>
+
+            <!-- Обновление результата -->
+            <div class="section">
+                <h2 class="section-title">Обновление результата</h2>
+                <form id="update-result-form">
+                    <div class="form-group">
+                        <label for="update-user-select" class="form-label">Пользователь</label>
+                        <div class="select-with-arrow">
+                            <select id="update-user-select" class="select-input" required>
+                                <option value="" disabled selected>Выберите пользователя</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-trait-select" class="form-label">Качество</label>
+                        <div class="select-with-arrow">
+                            <select id="update-trait-select" class="select-input" disabled>
+                                <option value="" disabled selected>Сначала выберите пользователя</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-level-input" class="form-label">Уровень качества</label>
+                        <input type="number" id="update-level-input" class="form-input" min="0" max="100"
+                            placeholder="Введите уровень качества (0-100)" disabled required />
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                        <button type="button" class="btn btn-secondary" id="cancel-update-result-btn">ОТМЕНИТЬ</button>
+                        <button type="submit" class="btn btn-success">ОБНОВИТЬ</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Удаление результата -->
+            <div class="section">
+                <h2 class="section-title">Удаление результата</h2>
+                <form id="delete-result-form">
+                    <div class="form-group">
+                        <label for="delete-user-select" class="form-label">Пользователь</label>
+                        <div class="select-with-arrow">
+                            <select id="delete-user-select" class="select-input" required>
+                                <option value="" disabled selected>Выберите пользователя</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="delete-trait-select" class="form-label">Качество</label>
+                        <div class="select-with-arrow">
+                            <select id="delete-trait-select" class="select-input" disabled>
+                                <option value="" disabled selected>Сначала выберите пользователя</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                        <button type="button" class="btn btn-secondary" id="cancel-delete-result-btn">ОТМЕНИТЬ</button>
+                        <button type="submit" class="btn btn-danger">УДАЛИТЬ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-info">
+            Тех.поддержка: <a href="mailto:podderzhka@ex.ru">podderzhka@ex.ru</a>
+        </div>
+        <div class="footer-copyright">
+            &copy; Все права защищены 2025
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Авторизация</h2>
+                <button class="close-btn" id="close-auth-modal">&times;</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login" class="form-label">Логин</label>
+                    <input type="text" id="login" class="form-input" placeholder="Логин" required />
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input type="password" id="password" class="form-input" placeholder="Пароль" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <button type="button" class="btn btn-secondary" id="show-registration">Регистрация</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="registration-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация</h2>
+                <button class="close-btn" id="close-registration-modal">&times;</button>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="first-name" class="form-label">Имя</label>
+                    <input type="text" id="first-name" class="form-input" placeholder="Имя" required />
+                </div>
+                <div class="form-group">
+                    <label for="reg-login" class="form-label">Логин</label>
+                    <input type="text" id="reg-login" class="form-input" placeholder="Логин" required />
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Электронная почта</label>
+                    <input type="email" id="email" class="form-input" placeholder="Электронная почта" required />
+                </div>
+                <div class="form-group">
+                    <label for="reg-password" class="form-label">Пароль</label>
+                    <input type="password" id="reg-password" class="form-input" placeholder="Пароль" required />
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password" class="form-label">Подтверждение пароля</label>
+                    <input type="password" id="confirm-password" class="form-input" placeholder="Пароль" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Продолжить</button>
+                <div class="switch-link" id="show-login">Уже есть аккаунт</div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="confirm-delete-modal">
+        <div class="confirm-modal">
+            <div class="modal-header">
+                <h2>ВНИМАНИЕ!</h2>
+                <button class="close-btn" id="close-confirm-delete">&times;</button>
+            </div>
+            <p>Вы уверены, что хотите удалить выбранный результат?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-cancel" id="cancel-delete-confirm">ОТМЕНИТЬ</button>
+                <button class="btn btn-confirm" id="confirm-delete">УДАЛИТЬ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="confirm-logout-modal">
+        <div class="confirm-modal">
+            <div class="modal-header">
+                <h2>ВНИМАНИЕ!</h2>
+                <button class="close-btn" id="close-confirm-logout">&times;</button>
+            </div>
+            <p>Вы уверены, что хотите выйти?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-cancel" id="cancel-logout">ОТМЕНИТЬ</button>
+                <button class="btn btn-confirm" id="confirm-logout">ВЫЙТИ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="info-modal">
+        <div class="info-modal">
+            <div class="modal-header">
+                <h2>Информация</h2>
+                <button class="close-btn" id="close-info-modal">&times;</button>
+            </div>
+            <p id="info-message">Текст информации</p>
+            <button class="info-button" id="info-ok">ОК</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="error-modal">
+        <div class="error-modal">
+            <div class="modal-header">
+                <h2>Ошибка!</h2>
+                <button class="close-btn" id="close-error-modal">&times;</button>
+            </div>
+            <p id="error-message">Текст ошибки</p>
+            <button class="error-button" id="error-ok">ОК</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.hostname === 'localhost'
+            ? 'http://localhost:8000'
+            : window.location.origin.replace(/:\d+$/, '') + ':8000';
+
+        function getToken() {
+            return localStorage.getItem('auth_token');
+        }
+        function clearToken() {
+            localStorage.removeItem('auth_token');
+        }
+        function getUserInfoFromToken() {
+            const token = getToken();
+            if (!token) return null;
+            try {
+                const payloadBase64 = token.split('.')[1];
+                const payload = JSON.parse(atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/')));
+                return { user_id: payload.sub, role: payload.role, fullName: payload.full_name };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // === Модальные окна ===
+        const authModal = document.getElementById('auth-modal');
+        const registrationModal = document.getElementById('registration-modal');
+        const confirmLogoutModal = document.getElementById('confirm-logout-modal');
+        const confirmDeleteModal = document.getElementById('confirm-delete-modal');
+        const infoModal = document.getElementById('info-modal');
+        const errorModal = document.getElementById('error-modal');
+
+        function openAuthModal() {
+            authModal.style.display = 'flex';
+            setTimeout(() => authModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeAuthModal() {
+            authModal.classList.remove('active');
+            setTimeout(() => {
+                authModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openRegistrationModal() {
+            registrationModal.style.display = 'flex';
+            setTimeout(() => registrationModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeRegistrationModal() {
+            registrationModal.classList.remove('active');
+            setTimeout(() => {
+                registrationModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openConfirmLogoutModal() {
+            confirmLogoutModal.style.display = 'flex';
+            setTimeout(() => confirmLogoutModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeConfirmLogoutModal() {
+            confirmLogoutModal.classList.remove('active');
+            setTimeout(() => {
+                confirmLogoutModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openConfirmDeleteModal() {
+            confirmDeleteModal.style.display = 'flex';
+            setTimeout(() => confirmDeleteModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeConfirmDeleteModal() {
+            confirmDeleteModal.classList.remove('active');
+            setTimeout(() => {
+                confirmDeleteModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openInfoModal(message) {
+            document.getElementById('info-message').textContent = message;
+            infoModal.style.display = 'flex';
+            setTimeout(() => infoModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeInfoModal() {
+            infoModal.classList.remove('active');
+            setTimeout(() => {
+                infoModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openErrorModal(message) {
+            document.getElementById('error-message').textContent = message;
+            errorModal.style.display = 'flex';
+            setTimeout(() => errorModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeErrorModal() {
+            errorModal.classList.remove('active');
+            setTimeout(() => {
+                errorModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        [authModal, registrationModal, confirmLogoutModal, confirmDeleteModal, infoModal, errorModal].forEach(modal => {
+            modal.addEventListener('mousedown', e => {
+                if (e.target === modal) {
+                    const map = {
+                        'auth-modal': closeAuthModal,
+                        'registration-modal': closeRegistrationModal,
+                        'confirm-logout-modal': closeConfirmLogoutModal,
+                        'confirm-delete-modal': closeConfirmDeleteModal,
+                        'info-modal': closeInfoModal,
+                        'error-modal': closeErrorModal
+                    };
+                    map[modal.id]();
+                }
+            });
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Escape') return;
+            const modals = [
+                { el: authModal, close: closeAuthModal },
+                { el: registrationModal, close: closeRegistrationModal },
+                { el: confirmLogoutModal, close: closeConfirmLogoutModal },
+                { el: confirmDeleteModal, close: closeConfirmDeleteModal },
+                { el: infoModal, close: closeInfoModal },
+                { el: errorModal, close: closeErrorModal }
+            ];
+            for (const { el, close } of modals) {
+                if (el.classList.contains('active')) {
+                    close();
+                    break;
+                }
+            }
+        });
+
+        document.getElementById('close-auth-modal').addEventListener('click', closeAuthModal);
+        document.getElementById('close-registration-modal').addEventListener('click', closeRegistrationModal);
+        document.getElementById('close-confirm-logout').addEventListener('click', closeConfirmLogoutModal);
+        document.getElementById('close-confirm-delete').addEventListener('click', closeConfirmDeleteModal);
+        document.getElementById('close-info-modal').addEventListener('click', closeInfoModal);
+        document.getElementById('close-error-modal').addEventListener('click', closeErrorModal);
+        document.getElementById('show-registration').addEventListener('click', e => {
+            e.preventDefault();
+            closeAuthModal();
+            setTimeout(openRegistrationModal, 300);
+        });
+        document.getElementById('show-login').addEventListener('click', e => {
+            e.preventDefault();
+            closeRegistrationModal();
+            setTimeout(openAuthModal, 300);
+        });
+        document.getElementById('logout-btn').addEventListener('click', e => {
+            e.preventDefault();
+            openConfirmLogoutModal();
+        });
+        document.getElementById('cancel-logout').addEventListener('click', e => {
+            e.preventDefault();
+            closeConfirmLogoutModal();
+        });
+        document.getElementById('confirm-logout').addEventListener('click', e => {
+            e.preventDefault();
+            clearToken();
+            window.location.href = 'index.html';
+        });
+        document.getElementById('cancel-delete-confirm').addEventListener('click', e => {
+            e.preventDefault();
+            closeConfirmDeleteModal();
+        });
+        document.getElementById('info-ok').addEventListener('click', e => {
+            e.preventDefault();
+            closeInfoModal();
+        });
+        document.getElementById('error-ok').addEventListener('click', e => {
+            e.preventDefault();
+            closeErrorModal();
+        });
+
+        // === API ===
+        async function fetchUsers() {
+            const token = getToken();
+            const res = await fetch(`${API_BASE}/users/`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Не удалось загрузить пользователей');
+            return await res.json();
+        }
+
+        async function fetchAllTraits() {
+            const token = getToken();
+            const res = await fetch(`${API_BASE}/traits/`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Не удалось загрузить качества');
+            return await res.json();
+        }
+
+        async function fetchUserResults(userId) {
+            const token = getToken();
+            const res = await fetch(`${API_BASE}/users/${userId}/results/`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Не удалось загрузить результаты');
+            return await res.json();
+        }
+
+        // === UI ===
+        function updateAuthUI() {
+            const token = getToken();
+            const userInfo = getUserInfoFromToken();
+            const accountBtn = document.getElementById('account-btn');
+            const accountDropdown = document.getElementById('account-dropdown');
+            const adminDropdown = document.getElementById('admin-dropdown');
+
+            if (token && userInfo?.fullName) {
+                accountBtn.textContent = `Личный кабинет (${userInfo.fullName})`;
+                accountDropdown.classList.add('authenticated');
+            } else {
+                accountBtn.textContent = 'Личный кабинет';
+                accountDropdown.classList.remove('authenticated');
+            }
+
+            if (token && userInfo && (userInfo.role === 'admin' || userInfo.role === 'psychologist')) {
+                adminDropdown.style.display = 'flex';
+            } else {
+                adminDropdown.style.display = 'none';
+                openErrorModal('Доступ запрещён. Требуются права администратора или психолога.');
+                setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+                return false;
+            }
+            return true;
+        }
+
+        // === Загрузка данных ===
+        let allTraitsMap = {};
+
+        async function loadInitialData() {
+            try {
+                const [users, traits] = await Promise.all([fetchUsers(), fetchAllTraits()]);
+                allTraitsMap = traits.reduce((acc, t) => ({ ...acc, [t.trait_id]: t.trait_name }), {});
+
+                const updateSelect = document.getElementById('update-user-select');
+                const deleteSelect = document.getElementById('delete-user-select');
+                updateSelect.innerHTML = '<option value="" disabled selected>Выберите пользователя</option>';
+                deleteSelect.innerHTML = '<option value="" disabled selected>Выберите пользователя</option>';
+                users.forEach(u => {
+                    const opt = new Option(u.full_name, u.user_id);
+                    updateSelect.appendChild(opt.cloneNode(true));
+                    deleteSelect.appendChild(opt);
+                });
+            } catch (err) {
+                openErrorModal(err.message || 'Ошибка загрузки данных');
+            }
+        }
+
+        // === Обновление зависимостей ===
+        async function updateUserDependentSelects(selectId, targetSelectId) {
+            const userId = document.getElementById(selectId).value;
+            const traitSelect = document.getElementById(targetSelectId);
+            const levelInput = targetSelectId === 'update-trait-select' ? document.getElementById('update-level-input') : null;
+
+            traitSelect.innerHTML = '<option value="" disabled selected>Сначала выберите пользователя</option>';
+            traitSelect.disabled = true;
+            if (levelInput) levelInput.disabled = true;
+
+            if (!userId) return;
+
+            try {
+                const results = await fetchUserResults(userId);
+                if (!results.length) {
+                    traitSelect.innerHTML = '<option value="" disabled selected>Нет результатов у пользователя</option>';
+                    return;
+                }
+
+                const uniqueTraitIds = [...new Set(results.map(r => r.trait_id))];
+                traitSelect.innerHTML = '<option value="" disabled selected>Выберите качество</option>';
+                uniqueTraitIds.forEach(tId => {
+                    const name = allTraitsMap[tId] || `Качество ID: ${tId}`;
+                    const display = name.length > 50 ? name.substring(0, 50) + '...' : name;
+                    traitSelect.appendChild(new Option(`Качество: ${display} (ID: ${tId})`, tId));
+                });
+                traitSelect.disabled = false;
+            } catch (err) {
+                openErrorModal(err.message || 'Ошибка загрузки результатов');
+            }
+        }
+
+        async function updateLevelInput() {
+            const userId = document.getElementById('update-user-select').value;
+            const traitId = document.getElementById('update-trait-select').value;
+            const levelInput = document.getElementById('update-level-input');
+            levelInput.value = '';
+            levelInput.disabled = true;
+
+            if (!userId || !traitId) return;
+
+            try {
+                const results = await fetchUserResults(userId);
+                const result = results.find(r => r.trait_id == traitId);
+                if (result) {
+                    levelInput.value = result.level;
+                    levelInput.disabled = false;
+                }
+            } catch (err) {
+                openErrorModal(err.message || 'Ошибка загрузки уровня');
+            }
+        }
+
+        // === Отправка обновления ===
+        document.getElementById('update-result-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            if (!updateAuthUI()) return;
+
+            const userId = document.getElementById('update-user-select').value;
+            const traitId = document.getElementById('update-trait-select').value;
+            const level = parseInt(document.getElementById('update-level-input').value);
+
+            if (!userId || !traitId || isNaN(level) || level < 0 || level > 100) {
+                openErrorModal('Выберите пользователя, качество и введите уровень (0–100)');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/results/${userId}/${traitId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ level })
+                });
+                if (!res.ok) throw new Error('Не удалось обновить результат');
+                openInfoModal('Результат обновлён!');
+                document.getElementById('update-result-form').reset();
+                document.getElementById('update-trait-select').disabled = true;
+                document.getElementById('update-level-input').disabled = true;
+            } catch (err) {
+                openErrorModal(err.message || 'Ошибка обновления');
+            }
+        });
+
+        // === Удаление ===
+        let pendingDeleteUserId = null;
+        let pendingDeleteTraitId = null;
+
+        document.getElementById('delete-result-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            if (!updateAuthUI()) return;
+
+            const userId = document.getElementById('delete-user-select').value;
+            const traitId = document.getElementById('delete-trait-select').value;
+
+            if (!userId || !traitId) {
+                openErrorModal('Выберите пользователя и качество');
+                return;
+            }
+
+            pendingDeleteUserId = userId;
+            pendingDeleteTraitId = traitId;
+            openConfirmDeleteModal();
+        });
+
+        document.getElementById('confirm-delete').addEventListener('click', async e => {
+            e.preventDefault();
+            if (!pendingDeleteUserId || !pendingDeleteTraitId) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/results/${pendingDeleteUserId}/${pendingDeleteTraitId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${getToken()}` }
+                });
+                if (!res.ok) throw new Error('Не удалось удалить результат');
+                openInfoModal('Результат удалён!');
+                document.getElementById('delete-result-form').reset();
+                document.getElementById('delete-trait-select').disabled = true;
+            } catch (err) {
+                openErrorModal(err.message || 'Ошибка удаления');
+            } finally {
+                pendingDeleteUserId = null;
+                pendingDeleteTraitId = null;
+                closeConfirmDeleteModal();
+            }
+        });
+
+        // === Отмена форм ===
+        document.getElementById('cancel-update-result-btn').addEventListener('click', () => {
+            document.getElementById('update-result-form').reset();
+            document.getElementById('update-trait-select').disabled = true;
+            document.getElementById('update-level-input').disabled = true;
+        });
+        document.getElementById('cancel-delete-result-btn').addEventListener('click', () => {
+            document.getElementById('delete-result-form').reset();
+            document.getElementById('delete-trait-select').disabled = true;
+        });
+
+        // === Авторизация ===
+        document.getElementById('login-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            const login = document.getElementById('login').value.trim();
+            const password = document.getElementById('password').value.trim();
+            if (!login || !password) return openErrorModal('Логин и пароль обязательны');
+
+            try {
+                const res = await fetch(`${API_BASE}/auth/token`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ username: login, password, grant_type: 'password' })
+                });
+                if (!res.ok) throw new Error('Неверный логин или пароль');
+                const data = await res.json();
+                localStorage.setItem('auth_token', data.access_token);
+                closeAuthModal();
+                if (updateAuthUI()) loadInitialData();
+            } catch (err) {
+                openErrorModal(err.message || 'Ошибка входа');
+            }
+        });
+
+        document.getElementById('register-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            const firstName = document.getElementById('first-name').value.trim();
+            const regLogin = document.getElementById('reg-login').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const regPassword = document.getElementById('reg-password').value.trim();
+            const confirmPassword = document.getElementById('confirm-password').value.trim();
+
+            if (!firstName || !regLogin || !email || !regPassword || !confirmPassword) {
+                return openErrorModal('Все поля обязательны');
+            }
+            if (regPassword !== confirmPassword) {
+                return openErrorModal('Пароли не совпадают');
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/users/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        full_name: firstName,
+                        login: regLogin,
+                        email,
+                        password: regPassword,
+                        role: "applicant"
+                    })
+                });
+                if (!res.ok) throw new Error('Ошибка регистрации');
+                openInfoModal('Регистрация успешна! Авторизуйтесь.');
+                closeRegistrationModal();
+                setTimeout(openAuthModal, 300);
+            } catch (err) {
+                openErrorModal(err.message || 'Ошибка регистрации');
+            }
+        });
+
+        // === Инициализация ===
+        document.addEventListener('DOMContentLoaded', () => {
+            if (updateAuthUI()) {
+                loadInitialData();
+            }
+        });
+
+        // === Слушатели ===
+        document.getElementById('update-user-select').addEventListener('change', () => {
+            updateUserDependentSelects('update-user-select', 'update-trait-select');
+        });
+        document.getElementById('update-trait-select').addEventListener('change', updateLevelInput);
+        document.getElementById('delete-user-select').addEventListener('change', () => {
+            updateUserDependentSelects('delete-user-select', 'delete-trait-select');
+        });
+    </script>
+</body>
+
+</html>

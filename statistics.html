@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speciality Консультант - Статистика</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style_non_admin_page.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            Speciality
+            <span>КОНСУЛЬТАНТ</span>
+        </div>
+        <nav class="nav" id="main-nav">
+            <a href="index.html" class="page-link">Главная</a>
+            <!-- Администрирование — будет добавлено динамически -->
+            <a href="specializations.html" class="page-link">Специальности</a>
+            <a href="about.html" class="page-link">О нас</a>
+            <div class="dropdown-container" id="account-dropdown">
+                <a href="#" class="nav-link" id="account-btn">Личный кабинет</a>
+                <div class="dropdown-menu">
+                    <a href="profile.html" class="dropdown-item page-link">Профиль</a>
+                    <a href="statistics.html" class="dropdown-item page-link">Статистика</a>
+                    <a href="#" class="dropdown-item" id="logout-btn">Выход</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Стандартный контейнер (показывается, если тесты есть) -->
+        <div class="statistics-container" id="statistics-container">
+            <h2 class="section-title">СТАТИСТИКА</h2>
+            <div class="stats-header">
+                <span class="stats-label">Количество пройденных тестов:</span>
+                <span id="completed-tests">0</span>
+            </div>
+            <div class="chart-container">
+                <div id="radar-chart-container">
+                    <canvas id="radar-chart" width="400" height="400"></canvas>
+                </div>
+                <div id="chart-legend"></div>
+            </div>
+            <div class="result-section">
+                <h3 class="result-title">Результат:</h3>
+                <div id="result-qualities" class="result-content"></div>
+                <div id="result-specialty" class="result-content"></div>
+            </div>
+            <div class="description-section">
+                <h3 class="description-title">Описание:</h3>
+                <div id="specialty-description" class="description-content"></div>
+            </div>
+        </div>
+
+        <!-- Сообщение при отсутствии тестов -->
+        <div class="statistics-container" id="no-tests-message" style="display: none;">
+            <h2 class="section-title">СТАТИСТИКА</h2>
+            <p class="result-content" style="margin-top: 20px;">
+                Вы пока не прошли ни одного теста. Это отличная возможность узнать больше о себе и своих склонностях!
+            </p>
+            <p class="result-content" style="margin-top: 10px;">
+                Пройдите тест прямо сейчас и узнайте, какая специальность подходит именно вам.
+            </p>
+            <a href="test.html" class="cta-button page-link">Получить специальность</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-info">
+            Тех.поддержка: <a href="mailto:emil-must@yandex.ru">emil-must@yandex.ru</a>
+        </div>
+        <div class="footer-copyright">
+            &copy; Все права защищены 2025
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Авторизация</h2>
+                <button class="close-btn" id="close-auth-modal">&times;</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group-auth">
+                    <label for="login" class="form-label-auth">Логин</label>
+                    <input type="text" id="login" class="form-input" placeholder="Логин" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="password" class="form-label-auth">Пароль</label>
+                    <input type="password" id="password" class="form-input" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <button type="button" class="btn btn-secondary" id="show-registration">Регистрация</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="registration-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация</h2>
+                <button class="close-btn" id="close-registration-modal">&times;</button>
+            </div>
+            <form id="register-form">
+                <div class="form-group-auth">
+                    <label for="first-name" class="form-label-auth">Имя</label>
+                    <input type="text" id="first-name" class="form-input" placeholder="Имя" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="reg-login" class="form-label-auth">Логин</label>
+                    <input type="text" id="reg-login" class="form-input" placeholder="Логин" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="email" class="form-label-auth">Электронная почта</label>
+                    <input type="email" id="email" class="form-input" placeholder="Электронная почта" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="reg-password" class="form-label-auth">Пароль</label>
+                    <input type="password" id="reg-password" class="form-input" placeholder="Пароль" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="confirm-password" class="form-label-auth">Подтверждение пароля</label>
+                    <input type="password" id="confirm-password" class="form-input" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Продолжить</button>
+                <div class="switch-link" id="show-login">Уже есть аккаунт</div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-overlay" id="confirm-logout-modal">
+        <div class="confirm-modal">
+            <div class="modal-header">
+                <h2>ВНИМАНИЕ!</h2>
+                <button class="close-btn" id="close-confirm-logout">&times;</button>
+            </div>
+            <p>Вы уверены, что хотите выйти?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-cancel" id="cancel-logout">ОТМЕНИТЬ</button>
+                <button class="btn btn-confirm" id="confirm-logout">ВЫЙТИ</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="info-modal">
+        <div class="info-modal">
+            <div class="modal-header">
+                <h2>Информация</h2>
+                <button class="close-btn" id="close-info-modal">&times;</button>
+            </div>
+            <p id="info-message">Текст информации</p>
+            <button class="info-button" id="info-ok">ОК</button>
+        </div>
+    </div>
+    <div class="modal-overlay" id="error-modal">
+        <div class="error-modal">
+            <div class="modal-header">
+                <h2>Ошибка!</h2>
+                <button class="close-btn" id="close-error-modal">&times;</button>
+            </div>
+            <p id="error-message">Текст ошибки</p>
+            <button class="error-button" id="error-ok">ОК</button>
+        </div>
+    </div>
+
+    <!-- === SCRIPTS === -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // === Базовые настройки ===
+        const API_BASE = window.location.hostname === 'localhost'
+            ? 'http://localhost:8000'
+            : window.location.origin.replace(/:\d+$/, '') + ':8000';
+
+        // === Вспомогательные функции токена ===
+        function getToken() {
+            return localStorage.getItem('auth_token');
+        }
+        function clearToken() {
+            localStorage.removeItem('auth_token');
+            updateAuthUI();
+        }
+        function getUserInfoFromToken() {
+            const token = getToken();
+            if (!token) return null;
+            try {
+                const payloadBase64 = token.split('.')[1];
+                const payload = JSON.parse(atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/')));
+                return { user_id: payload.sub, role: payload.role, fullName: payload.full_name };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // === Обновление UI по авторизации ===
+        const mainNav = document.getElementById('main-nav');
+        const accountDropdown = document.getElementById('account-dropdown');
+        const accountBtn = document.getElementById('account-btn');
+        function updateAuthUI() {
+            const token = getToken();
+            const userInfo = getUserInfoFromToken();
+            const accountBtn = document.getElementById('account-btn');
+            if (token && userInfo?.fullName) {
+                accountBtn.textContent = `Личный кабинет (${userInfo.fullName})`;
+                accountDropdown.classList.add('authenticated');
+            } else {
+                accountBtn.textContent = 'Личный кабинет';
+                accountDropdown.classList.remove('authenticated');
+            }
+            if (token && userInfo) {
+                accountDropdown.classList.add('authenticated');
+                loadUserDataAndRecommendations(userInfo.user_id);
+            } else {
+                accountDropdown.classList.remove('authenticated');
+                document.getElementById('completed-tests').textContent = '0';
+                clearChart();
+                document.getElementById('result-qualities').textContent = '';
+                document.getElementById('result-specialty').textContent = '';
+                document.getElementById('specialty-description').textContent = '';
+            }
+
+            // Управление меню админа
+            const existingAdmin = document.getElementById('admin-dropdown');
+            if (token && userInfo && (userInfo.role === 'admin' || userInfo.role === 'psychologist')) {
+                if (!existingAdmin) {
+                    const specialtiesLink = Array.from(mainNav.children).find(el => el.textContent.trim() === 'Специальности');
+                    if (specialtiesLink) {
+                        mainNav.insertBefore(createAdminDropdown(), specialtiesLink);
+                    } else {
+                        mainNav.appendChild(createAdminDropdown());
+                    }
+                }
+            } else if (existingAdmin) {
+                existingAdmin.remove();
+            }
+        }
+
+        function createAdminDropdown() {
+            const container = document.createElement('div');
+            container.className = 'dropdown-container';
+            container.id = 'admin-dropdown';
+            container.innerHTML = `
+                <a href="#" class="nav-link">Администрирование</a>
+                <div class="dropdown-menu">
+                    <a href="administrate_specialization.html" class="dropdown-item" class="page-link">Специальности</a>
+                    <a href="administrate_traits.html" class="dropdown-item" class="page-link">Качества</a>
+                    <a href="administrate_tests.html" class="dropdown-item" class="page-link">Тесты</a>
+                    <a href="administrate_questions.html" class="dropdown-item" class="page-link">Вопросы</a>
+                    <a href="administrate_answeroptions.html" class="dropdown-item" class="page-link">Варианты ответов</a>
+                    <a href="administrate_specializationstraits.html" class="dropdown-item" class="page-link">Требования к качествам</a>
+                    <a href="administrate_sessions.html" class="dropdown-item" class="page-link">Сессии</a>
+                    <a href="administrate_useranswers.html" class="dropdown-item" class="page-link">Ответы пользователей</a>
+                    <a href="administrate_testresults.html" class="dropdown-item" class="page-link">Результаты</a>
+                    <a href="administrate_users.html" class="dropdown-item" class="page-link">Пользователи</a>
+                </div>
+            `;
+            return container;
+        }
+
+        // === Chart ===
+        let radarChart = null;
+        function drawRadarChart(labels, data) {
+            const ctx = document.getElementById('radar-chart').getContext('2d');
+            if (radarChart) radarChart.destroy();
+
+            // Создаем массив цифр для меток на графике
+            const numberLabels = labels.map((_, index) => (index + 1).toString());
+
+            // Создаем легенду (список "цифра - название")
+            const legendDiv = document.getElementById('chart-legend');
+            legendDiv.innerHTML = '';
+            labels.forEach((name, index) => {
+                const item = document.createElement('div');
+                item.textContent = `${index + 1} - ${name}`;
+                item.style.margin = '5px 0';
+                item.style.fontSize = '14px';
+                item.style.whiteSpace = 'nowrap'; // Запрещаем перенос строки
+                item.style.overflow = 'hidden';
+                item.style.textOverflow = 'ellipsis';
+                legendDiv.appendChild(item);
+            });
+
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: numberLabels,
+                    datasets: [{
+                        label: 'Уровень качеств',
+                        data: data,
+                        fill: true,
+                        backgroundColor: 'rgba(74, 111, 165, 0.2)',
+                        borderColor: '#4a6fa5',
+                        pointBackgroundColor: '#4a6fa5',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#4a6fa5'
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 100,
+                            ticks: { stepSize: 20 },
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12, // Уменьшаем размер шрифта меток
+                                    weight: 'bold'
+                                },
+                                padding: 10, // Отступ от края
+                                color: '#333'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: 10 // Внутренний отступ для графика
+                    }
+                }
+            });
+        }
+        function clearChart() {
+            const ctx = document.getElementById('radar-chart').getContext('2d');
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            if (radarChart) radarChart.destroy();
+            radarChart = null;
+        }
+
+        // === Загрузка данных ===
+        async function loadUserDataAndRecommendations(userId) {
+            try {
+                // === 1. Сначала проверяем, есть ли пройденные тесты ===
+                const sessionsResponse = await fetch(`${API_BASE}/users/${userId}/sessions/`, {
+                    headers: { Authorization: `Bearer ${getToken()}` }
+                });
+                let completed = 0;
+                if (sessionsResponse.ok) {
+                    const sessions = await sessionsResponse.json();
+                    completed = sessions.filter(s => s.is_completed).length;
+                }
+                document.getElementById('completed-tests').textContent = completed;
+
+                // Переключение видимости блоков
+                const statsContainer = document.getElementById('statistics-container');
+                const noTestsMessage = document.getElementById('no-tests-message');
+
+                if (completed === 0) {
+                    statsContainer.style.display = 'none';
+                    noTestsMessage.style.display = 'block';
+                    return; // Выходим — нечего загружать
+                }
+
+                // === 2. Если тесты есть — продолжаем загрузку данных ===
+                const traitsResponse = await fetch(`${API_BASE}/traits/`, {
+                    headers: { Authorization: `Bearer ${getToken()}` }
+                });
+                if (!traitsResponse.ok) throw new Error("Не удалось загрузить качества");
+                const traits = await traitsResponse.json();
+                const traitMap = new Map(traits.map(t => [t.trait_id, t.trait_name]));
+
+                const resultsResponse = await fetch(`${API_BASE}/users/${userId}/results/`, {
+                    headers: { Authorization: `Bearer ${getToken()}` }
+                });
+                if (!resultsResponse.ok) throw new Error("Не удалось загрузить результаты");
+                const userResults = await resultsResponse.json();
+                const resultMap = new Map(userResults.map(r => [r.trait_id, r.level]));
+
+                const recResponse = await fetch(`${API_BASE}/users/${userId}/recommendations`, {
+                    headers: { Authorization: `Bearer ${getToken()}` }
+                });
+                if (!recResponse.ok) throw new Error("Не удалось загрузить рекомендации");
+                const recommendations = await recResponse.json();
+
+                if (recommendations.length === 0) {
+                    document.getElementById('result-qualities').textContent = "Недостаточно данных для определения качеств.";
+                    document.getElementById('result-specialty').textContent = "Специальность не определена.";
+                    document.getElementById('specialty-description').textContent = "";
+                } else {
+                    const topRec = recommendations[0];
+                    const labels = [];
+                    const data = [];
+                    for (const [traitId, name] of traitMap.entries()) {
+                        labels.push(name);
+                        data.push(resultMap.get(traitId) || 0);
+                    }
+                    drawRadarChart(labels, data);
+
+                    const qualityNames = topRec.required_traits || [];
+                    document.getElementById('result-qualities').textContent =
+                        `Многоугольник качеств показывает, что у вас развиты такие качества как: ${qualityNames.join(', ')}.`;
+                    document.getElementById('result-specialty').textContent =
+                        `В соответствии с этим ваша потенциальная специальность — это ${topRec.name}.`;
+                    document.getElementById('specialty-description').textContent = topRec.description || "Описание отсутствует.";
+                }
+
+                // Убеждаемся, что основной блок показан (на случай, если он был скрыт ранее)
+                statsContainer.style.display = 'block';
+                noTestsMessage.style.display = 'none';
+
+            } catch (err) {
+                openErrorModal(err.message || "Ошибка при загрузке данных");
+            }
+        }
+
+        // === Модальные окна (без изменений) ===
+        const authModal = document.getElementById('auth-modal');
+        const registrationModal = document.getElementById('registration-modal');
+        const confirmLogoutModal = document.getElementById('confirm-logout-modal');
+        const infoModal = document.getElementById('info-modal');
+        const errorModal = document.getElementById('error-modal');
+        const closeAuthModalBtn = document.getElementById('close-auth-modal');
+        const closeRegistrationModalBtn = document.getElementById('close-registration-modal');
+        const closeConfirmLogoutBtn = document.getElementById('close-confirm-logout');
+        const closeInfoModalBtn = document.getElementById('close-info-modal');
+        const closeErrorModalBtn = document.getElementById('close-error-modal');
+        const showRegistrationBtn = document.getElementById('show-registration');
+        const showLoginLink = document.getElementById('show-login');
+        const logoutBtn = document.getElementById('logout-btn');
+        const cancelLogoutBtn = document.getElementById('cancel-logout');
+        const confirmLogoutBtn = document.getElementById('confirm-logout');
+        const infoOkBtn = document.getElementById('info-ok');
+        const errorOkBtn = document.getElementById('error-ok');
+        const infoMessage = document.getElementById('info-message');
+        const errorMessage = document.getElementById('error-message');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+
+        function openAuthModal() {
+            authModal.style.display = 'flex';
+            setTimeout(() => authModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeAuthModal() {
+            authModal.classList.remove('active');
+            setTimeout(() => {
+                authModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openRegistrationModal() {
+            registrationModal.style.display = 'flex';
+            setTimeout(() => registrationModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeRegistrationModal() {
+            registrationModal.classList.remove('active');
+            setTimeout(() => {
+                registrationModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openConfirmLogoutModal() {
+            confirmLogoutModal.style.display = 'flex';
+            setTimeout(() => confirmLogoutModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeConfirmLogoutModal() {
+            confirmLogoutModal.classList.remove('active');
+            setTimeout(() => {
+                confirmLogoutModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openInfoModal(message) {
+            infoMessage.textContent = message;
+            infoModal.style.display = 'flex';
+            setTimeout(() => infoModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeInfoModal() {
+            infoModal.classList.remove('active');
+            setTimeout(() => {
+                infoModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openErrorModal(message) {
+            errorMessage.textContent = message;
+            errorModal.style.display = 'flex';
+            setTimeout(() => errorModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeErrorModal() {
+            errorModal.classList.remove('active');
+            setTimeout(() => {
+                errorModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        // === Обработчики кнопок (без изменений) ===
+        accountBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (!getToken()) openAuthModal();
+        });
+
+        [closeAuthModalBtn, closeRegistrationModalBtn, closeConfirmLogoutBtn, closeInfoModalBtn, closeErrorModalBtn]
+            .forEach(btn => btn.addEventListener('click', () => {
+                const id = btn.id;
+                if (id.includes('auth')) closeAuthModal();
+                else if (id.includes('registration')) closeRegistrationModal();
+                else if (id.includes('confirm-logout')) closeConfirmLogoutModal();
+                else if (id.includes('info')) closeInfoModal();
+                else if (id.includes('error')) closeErrorModal();
+            }));
+
+        showRegistrationBtn.addEventListener('click', e => {
+            e.preventDefault();
+            closeAuthModal();
+            setTimeout(openRegistrationModal, 300);
+        });
+
+        showLoginLink.addEventListener('click', e => {
+            e.preventDefault();
+            closeRegistrationModal();
+            setTimeout(openAuthModal, 300);
+        });
+
+        logoutBtn.addEventListener('click', e => {
+            e.preventDefault();
+            openConfirmLogoutModal();
+        });
+
+        cancelLogoutBtn.addEventListener('click', e => {
+            e.preventDefault();
+            closeConfirmLogoutModal();
+        });
+
+        confirmLogoutBtn.addEventListener('click', e => {
+            e.preventDefault();
+            clearToken();
+            window.location.href = 'index.html';
+            window.history.replaceState(null, '', 'index.html');
+        });
+        infoOkBtn.addEventListener('click', closeInfoModal);
+        errorOkBtn.addEventListener('click', closeErrorModal);
+
+        [authModal, registrationModal, confirmLogoutModal, infoModal, errorModal].forEach(modal => {
+            modal.addEventListener('mousedown', e => {
+                if (e.target === modal) {
+                    const actions = {
+                        'auth-modal': closeAuthModal,
+                        'registration-modal': closeRegistrationModal,
+                        'confirm-logout-modal': closeConfirmLogoutModal,
+                        'info-modal': closeInfoModal,
+                        'error-modal': closeErrorModal
+                    };
+                    actions[modal.id]();
+                }
+            });
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Escape') return;
+            const modals = [
+                { el: authModal, close: closeAuthModal },
+                { el: registrationModal, close: closeRegistrationModal },
+                { el: confirmLogoutModal, close: closeConfirmLogoutModal },
+                { el: infoModal, close: closeInfoModal },
+                { el: errorModal, close: closeErrorModal }
+            ];
+            for (const { el, close } of modals) {
+                if (el.classList.contains('active')) {
+                    close();
+                    break;
+                }
+            }
+        });
+
+        // === Авторизация ===
+        loginForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const login = document.getElementById('login').value.trim();
+            const password = document.getElementById('password').value;
+            try {
+                const response = await fetch(`${API_BASE}/auth/token`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        username: login,
+                        password: password,
+                        grant_type: 'password'
+                    })
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('auth_token', data.access_token);
+                    updateAuthUI();
+                    closeAuthModal();
+                    openInfoModal("Вы успешно вошли в систему!");
+                } else {
+                    const err = await response.json().catch(() => ({}));
+                    openErrorModal(err.detail || "Ошибка авторизации");
+                }
+            } catch (error) {
+                openErrorModal("Ошибка соединения с сервером");
+            }
+        });
+
+        registerForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const firstName = document.getElementById('first-name').value.trim();
+            const login = document.getElementById('reg-login').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            if (password !== confirmPassword) {
+                openErrorModal("Пароли не совпадают");
+                return;
+            }
+            try {
+                const userData = {
+                    full_name: firstName,
+                    login: login,
+                    email: email,
+                    password: password,
+                    role: "applicant"
+                };
+                const response = await fetch(`${API_BASE}/users/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+                if (response.ok) {
+                    closeRegistrationModal();
+                    openInfoModal("Вы успешно зарегистрировались! Теперь вы можете войти в систему.");
+                } else {
+                    const err = await response.json().catch(() => ({}));
+                    openErrorModal(err.detail || "Ошибка регистрации");
+                }
+            } catch (error) {
+                openErrorModal("Ошибка соединения с сервером");
+            }
+        });
+
+        // === Инициализация ===
+        document.addEventListener('DOMContentLoaded', updateAuthUI);
+    </script>
+</body>
+
+</html>

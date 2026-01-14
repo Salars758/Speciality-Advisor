@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speciality Консультант - Администрирование Пользователей</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style_admin_page.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">Speciality<span>КОНСУЛЬТАНТ</span></div>
+        <nav class="nav" id="main-nav">
+            <a href="index.html" class="page-link">Главная</a>
+            <div class="dropdown-container" id="admin-dropdown">
+                <a href="#" class="nav-link">Администрирование</a>
+                <div class="dropdown-menu">
+                    <a href="administrate_specialization.html" class="dropdown-item page-link">Специальности</a>
+                    <a href="administrate_traits.html" class="dropdown-item page-link">Качества</a>
+                    <a href="administrate_tests.html" class="dropdown-item page-link">Тесты</a>
+                    <a href="administrate_questions.html" class="dropdown-item page-link">Вопросы</a>
+                    <a href="administrate_answeroptions.html" class="dropdown-item page-link">Варианты ответов</a>
+                    <a href="administrate_specializationstraits.html" class="dropdown-item page-link">Требования к
+                        качествам</a>
+                    <a href="administrate_sessions.html" class="dropdown-item page-link">Сессии</a>
+                    <a href="administrate_useranswers.html" class="dropdown-item page-link">Ответы пользователей</a>
+                    <a href="administrate_testresults.html" class="dropdown-item page-link">Результаты</a>
+                    <a href="administrate_users.html" class="dropdown-item page-link">Пользователи</a>
+                </div>
+            </div>
+            <a href="specializations.html" class="page-link">Специальности</a>
+            <a href="about.html" class="page-link">О нас</a>
+            <div class="dropdown-container" id="account-dropdown">
+                <a href="#" class="nav-link" id="account-btn">Личный кабинет</a>
+                <div class="dropdown-menu">
+                    <a href="profile.html" class="dropdown-item page-link">Профиль</a>
+                    <a href="statistics.html" class="dropdown-item page-link">Статистика</a>
+                    <a href="#" class="dropdown-item" id="logout-btn">Выход</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">АДМИНИСТРИРОВАНИЕ | ПОЛЬЗОВАТЕЛИ</h1>
+
+            <!-- Создание -->
+            <div class="section">
+                <h2 class="section-title">Создание нового пользователя</h2>
+                <form id="create-user-form">
+                    <div class="form-group">
+                        <label for="first-name" class="form-label">Имя пользователя</label>
+                        <input type="text" id="first-name" class="form-input" placeholder="Имя пользователя" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login" class="form-label">Логин пользователя</label>
+                        <input type="text" id="login" class="form-input" placeholder="Логин пользователя" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Электронная почта пользователя</label>
+                        <input type="email" id="email" class="form-input" placeholder="Электронная почта пользователя"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role" class="form-label">Роль пользователя</label>
+                        <div class="select-with-arrow">
+                            <select id="role" class="select-input" required>
+                                <option value="" disabled selected>Выберите роль</option>
+                                <option value="applicant">Пользователь</option>
+                                <option value="psychologist">Психолог</option>
+                                <option value="admin">Администратор</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Пароль для пользователя</label>
+                        <input type="password" id="password" class="form-input" placeholder="Пароль для пользователя"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password" class="form-label">Подтверждение пароля</label>
+                        <input type="password" id="confirm-password" class="form-input"
+                            placeholder="Подтверждение пароля" required>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                        <button type="button" class="btn btn-cancel" id="cancel-create-btn">ОТМЕНИТЬ</button>
+                        <button type="submit" class="btn btn-success">СОЗДАТЬ</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Обновление -->
+            <div class="section">
+                <h2 class="section-title">Редактирование данных пользователя</h2>
+                <form id="update-user-form">
+                    <div class="form-group">
+                        <label for="update-user-select" class="form-label">Пользователь</label>
+                        <div class="select-with-arrow">
+                            <select id="update-user-select" class="select-input" required>
+                                <option value="" disabled selected>Загрузка пользователей...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-first-name" class="form-label">Имя пользователя</label>
+                        <input type="text" id="update-first-name" class="form-input" placeholder="Имя пользователя"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-login" class="form-label">Логин пользователя</label>
+                        <input type="text" id="update-login" class="form-input" placeholder="Логин пользователя"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-email" class="form-label">Электронная почта пользователя</label>
+                        <input type="email" id="update-email" class="form-input"
+                            placeholder="Электронная почта пользователя" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-role-display" class="form-label">Роль пользователя</label>
+                        <input type="text" id="update-role-display" class="form-input" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-password" class="form-label">Новый пароль</label>
+                        <input type="password" id="update-password" class="form-input"
+                            placeholder="Оставить пустым для сохранения">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-confirm-password" class="form-label">Подтверждение пароля</label>
+                        <input type="password" id="update-confirm-password" class="form-input"
+                            placeholder="Подтверждение пароля">
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                        <button type="button" class="btn btn-cancel" id="cancel-update-btn">ОТМЕНИТЬ</button>
+                        <button type="submit" class="btn btn-update">ОБНОВИТЬ</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Удаление -->
+            <div class="section">
+                <h2 class="section-title">Удаление пользователя</h2>
+                <form id="delete-user-form">
+                    <div class="form-group">
+                        <label for="delete-user-select" class="form-label">Пользователь</label>
+                        <div class="select-with-arrow">
+                            <select id="delete-user-select" class="select-input" required>
+                                <option value="" disabled selected>Загрузка пользователей...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="delete-login-display" class="form-label">Логин пользователя</label>
+                        <input type="text" id="delete-login-display" class="form-input" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="delete-login-confirm" class="form-label">Подтвердите логин</label>
+                        <input type="text" id="delete-login-confirm" class="form-input"
+                            placeholder="Введите логин ещё раз">
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                        <button type="button" class="btn btn-secondary" id="cancel-delete-btn">ОТМЕНИТЬ</button>
+                        <button type="submit" class="btn btn-danger">УДАЛИТЬ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-info">Тех.поддержка: <a href="mailto:podderzhka@ex.ru">podderzhka@ex.ru</a></div>
+        <div class="footer-copyright">&copy; Все права защищены 2025</div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Авторизация</h2><button class="close-btn" id="close-auth-modal">&times;</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group"><label for="login" class="form-label">Логин</label><input type="text" id="login"
+                        class="form-input" placeholder="Логин" required></div>
+                <div class="form-group"><label for="password" class="form-label">Пароль</label><input type="password"
+                        id="password" class="form-input" placeholder="Пароль" required></div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <button type="button" class="btn btn-secondary" id="show-registration">Регистрация</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="registration-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация</h2><button class="close-btn"
+                    id="close-registration-modal">&times;</button>
+            </div>
+            <form id="register-form">
+                <div class="form-group"><label for="first-name" class="form-label">Имя</label><input type="text"
+                        id="first-name" class="form-input" placeholder="Имя" required></div>
+                <div class="form-group"><label for="reg-login" class="form-label">Логин</label><input type="text"
+                        id="reg-login" class="form-input" placeholder="Логин" required></div>
+                <div class="form-group"><label for="email" class="form-label">Электронная почта</label><input
+                        type="email" id="email" class="form-input" placeholder="Электронная почта" required></div>
+                <div class="form-group"><label for="reg-password" class="form-label">Пароль</label><input
+                        type="password" id="reg-password" class="form-input" placeholder="Пароль" required></div>
+                <div class="form-group"><label for="confirm-password" class="form-label">Подтверждение
+                        пароля</label><input type="password" id="confirm-password" class="form-input"
+                        placeholder="Пароль" required></div>
+                <button type="submit" class="btn btn-primary">Продолжить</button>
+                <div class="switch-link" id="show-login">Уже есть аккаунт</div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="confirm-delete-modal">
+        <div class="confirm-modal">
+            <div class="modal-header">
+                <h2>ВНИМАНИЕ!</h2><button class="close-btn" id="close-confirm-delete">&times;</button>
+            </div>
+            <p>Вы уверены, что хотите удалить выбранного пользователя?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-cancel" id="cancel-delete-confirm">ОТМЕНИТЬ</button>
+                <button class="btn btn-confirm" id="confirm-delete">УДАЛИТЬ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="confirm-logout-modal">
+        <div class="confirm-modal">
+            <div class="modal-header">
+                <h2>ВНИМАНИЕ!</h2><button class="close-btn" id="close-confirm-logout">&times;</button>
+            </div>
+            <p>Вы уверены, что хотите выйти?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-cancel" id="cancel-logout">ОТМЕНИТЬ</button>
+                <button class="btn btn-confirm" id="confirm-logout">ВЫЙТИ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="info-modal">
+        <div class="info-modal">
+            <div class="modal-header">
+                <h2>Информация</h2><button class="close-btn" id="close-info-modal">&times;</button>
+            </div>
+            <p id="info-message">Текст информации</p>
+            <button class="info-button" id="info-ok">ОК</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="error-modal">
+        <div class="error-modal">
+            <div class="modal-header">
+                <h2>Ошибка!</h2><button class="close-btn" id="close-error-modal">&times;</button>
+            </div>
+            <p id="error-message">Текст ошибки</p>
+            <button class="error-button" id="error-ok">ОК</button>
+        </div>
+    </div>
+
+    <script>
+        // === Настройки и утилиты ===
+        const API_BASE = window.location.hostname === 'localhost'
+            ? 'http://localhost:8000'
+            : window.location.origin.replace(/:\d+$/, '') + ':8000';
+
+        function getToken() {
+            return localStorage.getItem('auth_token');
+        }
+
+        function clearToken() {
+            localStorage.removeItem('auth_token');
+        }
+
+        function getUserInfoFromToken() {
+            const token = getToken();
+            if (!token) return null;
+            try {
+                const payloadBase64 = token.split('.')[1];
+                const payload = JSON.parse(atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/')));
+                return { user_id: payload.sub, role: payload.role, fullName: payload.full_name };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // === Управление UI состоянием ===
+        const mainNav = document.getElementById('main-nav');
+        const accountDropdown = document.getElementById('account-dropdown');
+        const accountBtn = document.getElementById('account-btn');
+
+        function updateAuthUI() {
+            const token = getToken();
+            const userInfo = getUserInfoFromToken();
+
+            if (token && userInfo?.fullName) {
+                accountBtn.textContent = `Личный кабинет (${userInfo.fullName})`;
+                accountDropdown.classList.add('authenticated');
+            } else {
+                accountBtn.textContent = 'Личный кабинет';
+                accountDropdown.classList.remove('authenticated');
+            }
+
+            const existingAdmin = document.getElementById('admin-dropdown');
+            if (token && userInfo && (userInfo.role === 'admin' || userInfo.role === 'psychologist')) {
+                if (!existingAdmin) {
+                    const specialtiesLink = Array.from(mainNav.children).find(el => el.textContent.trim() === 'Специальности');
+                    if (specialtiesLink) {
+                        mainNav.insertBefore(createAdminDropdown(), specialtiesLink);
+                    } else {
+                        mainNav.appendChild(createAdminDropdown());
+                    }
+                }
+            } else if (existingAdmin) {
+                existingAdmin.remove();
+            }
+
+            if (userInfo?.role === 'admin' || userInfo?.role === 'psychologist') {
+                loadUsersIntoSelects();
+            } else {
+                openAuthModal();
+            }
+        }
+
+        function createAdminDropdown() {
+            const container = document.createElement('div');
+            container.className = 'dropdown-container';
+            container.id = 'admin-dropdown';
+            container.innerHTML = `
+        <a href="#" class="nav-link">Администрирование</a>
+        <div class="dropdown-menu">
+          <a href="administrate_specialization.html" class="dropdown-item page-link">Специальности</a>
+          <a href="administrate_traits.html" class="dropdown-item page-link">Качества</a>
+          <a href="administrate_tests.html" class="dropdown-item page-link">Тесты</a>
+          <a href="administrate_questions.html" class="dropdown-item page-link">Вопросы</a>
+          <a href="administrate_answeroptions.html" class="dropdown-item page-link">Варианты ответов</a>
+          <a href="administrate_specializationstraits.html" class="dropdown-item page-link">Требования к качествам</a>
+          <a href="administrate_sessions.html" class="dropdown-item page-link">Сессии</a>
+          <a href="administrate_useranswers.html" class="dropdown-item page-link">Ответы пользователей</a>
+          <a href="administrate_testresults.html" class="dropdown-item page-link">Результаты</a>
+          <a href="administrate_users.html" class="dropdown-item page-link">Пользователи</a>
+        </div>`;
+            return container;
+        }
+
+        // === Модальные окна ===
+        const modals = {
+            auth: document.getElementById('auth-modal'),
+            registration: document.getElementById('registration-modal'),
+            confirmLogout: document.getElementById('confirm-logout-modal'),
+            confirmDelete: document.getElementById('confirm-delete-modal'),
+            info: document.getElementById('info-modal'),
+            error: document.getElementById('error-modal')
+        };
+
+        function openModal(name) {
+            modals[name].style.display = 'flex';
+            setTimeout(() => modals[name].classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(name) {
+            modals[name].classList.remove('active');
+            setTimeout(() => {
+                modals[name].style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                Object.keys(modals).forEach(name => {
+                    if (modals[name].classList.contains('active')) closeModal(name);
+                });
+            }
+        });
+
+        // Обработка кликов вне модалки
+        Object.values(modals).forEach(modal => {
+            modal.addEventListener('mousedown', (e) => {
+                if (e.target === modal) {
+                    const name = Object.keys(modals).find(k => modals[k] === modal);
+                    closeModal(name);
+                }
+            });
+        });
+
+        // === API-функции ===
+        async function fetchUsers() {
+            const token = getToken();
+            try {
+                const res = await fetch(`${API_BASE}/users/`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!res.ok) throw new Error('Не удалось загрузить пользователей');
+                return await res.json();
+            } catch (err) {
+                openModal('error');
+                document.getElementById('error-message').textContent = err.message || 'Ошибка загрузки пользователей';
+                return [];
+            }
+        }
+
+        async function createUser(data) {
+            const token = getToken();
+            const res = await fetch(`${API_BASE}/users/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    full_name: data.first_name,
+                    login: data.login,
+                    email: data.email,
+                    role: data.role,
+                    password: data.password
+                })
+            });
+            if (!res.ok) throw new Error((await res.json()).detail || 'Ошибка создания');
+            return await res.json();
+        }
+
+        async function updateUser(userId, data) {
+            const token = getToken();
+            const body = {
+                full_name: data.first_name,
+                login: data.login,
+                email: data.email,
+                role: data.role
+            };
+            if (data.password) body.new_password = data.password;
+            const res = await fetch(`${API_BASE}/users/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(body)
+            });
+            if (!res.ok) throw new Error((await res.json()).detail || 'Ошибка обновления');
+            return await res.json();
+        }
+
+        async function deleteUser(userId) {
+            const token = getToken();
+            const res = await fetch(`${API_BASE}/users/${userId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error((await res.json()).detail || 'Ошибка удаления');
+            return true;
+        }
+
+        // === Рендеринг и события ===
+        let allUsers = [];
+        function renderUserOptions(selectEl, users) {
+            selectEl.innerHTML = '<option value="" disabled selected>Выберите пользователя</option>';
+            users.forEach(u => {
+                const opt = document.createElement('option');
+                opt.value = u.user_id;
+                opt.textContent = `${u.full_name || 'Без имени'} (${u.login})`;
+                selectEl.appendChild(opt);
+            });
+        }
+
+        function fillUpdateForm(user) {
+            document.getElementById('update-first-name').value = user.full_name || '';
+            document.getElementById('update-login').value = user.login || '';
+            document.getElementById('update-email').value = user.email || '';
+
+            // Отображение роли в виде текста (не select)
+            const roleMap = {
+                applicant: "Пользователь",
+                psychologist: "Психолог",
+                admin: "Администратор"
+            };
+            document.getElementById('update-role-display').value = roleMap[user.role] || user.role || '—';
+
+            // пароль не заполняем
+        }
+
+        // === Обработчики ===
+        document.getElementById('update-user-select').addEventListener('change', (e) => {
+            const userId = e.target.value;
+            if (!userId) return;
+            const user = allUsers.find(u => u.user_id == userId);
+            if (user) fillUpdateForm(user);
+        });
+
+        document.getElementById('delete-user-select').addEventListener('change', (e) => {
+            const userId = e.target.value;
+            const display = document.getElementById('delete-login-display');
+            const confirm = document.getElementById('delete-login-confirm');
+            if (!userId) {
+                display.value = '';
+                confirm.value = '';
+                return;
+            }
+            const user = allUsers.find(u => u.user_id == userId);
+            if (user) display.value = user.login;
+            else display.value = '';
+        });
+
+        document.getElementById('create-user-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const f = e.target;
+            const pwd = f.querySelector('#password').value;
+            const pwd2 = f.querySelector('#confirm-password').value;
+            if (pwd !== pwd2) return openModal('error', 'Пароли не совпадают');
+            try {
+                await createUser({
+                    first_name: f.querySelector('#first-name').value.trim(),
+                    login: f.querySelector('#login').value.trim(),
+                    email: f.querySelector('#email').value.trim(),
+                    role: f.querySelector('#role').value,
+                    password: pwd
+                });
+                openModal('info');
+                document.getElementById('info-message').textContent = 'Пользователь успешно создан';
+                f.reset();
+                await loadUsersIntoSelects();
+            } catch (err) {
+                openModal('error');
+                document.getElementById('error-message').textContent = err.message || 'Ошибка';
+            }
+        });
+
+        document.getElementById('update-user-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const f = e.target;
+            const pwd = f.querySelector('#update-password').value;
+            const pwd2 = f.querySelector('#update-confirm-password').value;
+            if (pwd && pwd !== pwd2) return openModal('error', 'Пароли не совпадают');
+            const userId = f.querySelector('#update-user-select').value;
+            if (!userId) return openModal('error', 'Выберите пользователя');
+            try {
+                await updateUser(userId, {
+                    first_name: f.querySelector('#update-first-name').value.trim(),
+                    login: f.querySelector('#update-login').value.trim(),
+                    email: f.querySelector('#update-email').value.trim(),
+                    password: pwd || undefined
+                });
+                openModal('info');
+                document.getElementById('info-message').textContent = 'Пользователь успешно обновлён';
+                f.reset();
+                await loadUsersIntoSelects();
+            } catch (err) {
+                openModal('error');
+                document.getElementById('error-message').textContent = err.message || 'Ошибка';
+            }
+        });
+
+        document.getElementById('delete-user-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('delete-user-select').value;
+            const loginToConfirm = document.getElementById('delete-login-confirm').value.trim();
+            const expectedLogin = document.getElementById('delete-login-display').value.trim();
+            if (!userId) return openModal('error', 'Выберите пользователя');
+            if (loginToConfirm !== expectedLogin) return openModal('error', 'Логины не совпадают');
+            openModal('confirmDelete');
+            window.__pendingDeleteId = userId;
+        });
+
+        document.getElementById('confirm-delete').addEventListener('click', async () => {
+            try {
+                const userId = window.__pendingDeleteId;
+                if (!userId) throw new Error('Нет пользователя для удаления');
+                await deleteUser(userId);
+                openModal('info');
+                document.getElementById('info-message').textContent = 'Пользователь успешно удалён';
+                document.getElementById('delete-user-form').reset();
+                document.getElementById('delete-login-display').value = '';
+                document.getElementById('delete-login-confirm').value = '';
+                await loadUsersIntoSelects();
+            } catch (err) {
+                openModal('error');
+                document.getElementById('error-message').textContent = err.message || 'Ошибка удаления';
+            } finally {
+                closeModal('confirmDelete');
+                delete window.__pendingDeleteId;
+            }
+        });
+
+        // Кнопки отмены
+        document.getElementById('cancel-create-btn').addEventListener('click', () => document.getElementById('create-user-form').reset());
+        document.getElementById('cancel-update-btn').addEventListener('click', () => document.getElementById('update-user-form').reset());
+        document.getElementById('cancel-delete-btn').addEventListener('click', () => document.getElementById('delete-user-form').reset());
+
+        // Модальные действия
+        document.getElementById('close-auth-modal').addEventListener('click', () => closeModal('auth'));
+        document.getElementById('close-registration-modal').addEventListener('click', () => closeModal('registration'));
+        document.getElementById('close-confirm-logout').addEventListener('click', () => closeModal('confirmLogout'));
+        document.getElementById('close-confirm-delete').addEventListener('click', () => closeModal('confirmDelete'));
+        document.getElementById('close-info-modal').addEventListener('click', () => closeModal('info'));
+        document.getElementById('close-error-modal').addEventListener('click', () => closeModal('error'));
+        document.getElementById('show-registration').addEventListener('click', () => { closeModal('auth'); setTimeout(() => openModal('registration'), 300); });
+        document.getElementById('show-login').addEventListener('click', () => { closeModal('registration'); setTimeout(() => openModal('auth'), 300); });
+        document.getElementById('logout-btn').addEventListener('click', () => openModal('confirmLogout'));
+        document.getElementById('confirm-logout').addEventListener('click', () => {
+            clearToken();
+            window.location.href = 'index.html';
+        });
+        document.getElementById('cancel-logout').addEventListener('click', () => closeModal('confirmLogout'));
+        document.getElementById('cancel-delete-confirm').addEventListener('click', () => closeModal('confirmDelete'));
+        document.getElementById('info-ok').addEventListener('click', () => closeModal('info'));
+        document.getElementById('error-ok').addEventListener('click', () => closeModal('error'));
+
+        // === Инициализация ===
+        async function loadUsersIntoSelects() {
+            const users = await fetchUsers();
+            allUsers = users;
+            renderUserOptions(document.getElementById('update-user-select'), users);
+            renderUserOptions(document.getElementById('delete-user-select'), users);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+        });
+    </script>
+</body>
+
+</html>

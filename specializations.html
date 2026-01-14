@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speciality Консультант</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style_non_admin_page.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            Speciality
+            <span>КОНСУЛЬТАНТ</span>
+        </div>
+        <nav class="nav" id="main-nav">
+            <a href="index.html" class="page-link">Главная</a>
+            <!-- Администрирование — будет добавлено динамически -->
+            <a href="specializations.html" class="active page-link">Специальности</a>
+            <a href="about.html" class="page-link">О нас</a>
+            <!-- Личный кабинет -->
+            <div class="dropdown-container" id="account-dropdown">
+                <a href="#" class="nav-link" id="account-btn">Личный кабинет</a>
+                <div class="dropdown-menu">
+                    <a href="profile.html" class="dropdown-item page-link">Профиль</a>
+                    <a href="statistics.html" class="dropdown-item page-link">Статистика</a>
+                    <a href="#" class="dropdown-item" id="logout-btn">Выход</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="main-content">
+        <div class="specialties-container">
+            <h2 class="section-title">СПЕЦИАЛЬНОСТИ</h2>
+            <div id="specialties-list">
+                <div class="loading">Загрузка специальностей...</div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-info">
+            Тех.поддержка: <a href="mailto:emil-must@yandex.ru">emil-must@yandex.ru</a>
+        </div>
+        <div class="footer-copyright">
+            &copy; Все права защищены 2025
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Авторизация</h2>
+                <button class="close-btn" id="close-auth-modal">&times;</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group-auth">
+                    <label for="login" class="form-label-auth">Логин</label>
+                    <input type="text" id="login" class="form-input" placeholder="Логин" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="password" class="form-label-auth">Пароль</label>
+                    <input type="password" id="password" class="form-input" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <button type="button" class="btn btn-secondary" id="show-registration">Регистрация</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="registration-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация</h2>
+                <button class="close-btn" id="close-registration-modal">&times;</button>
+            </div>
+            <form id="register-form">
+                <div class="form-group-auth">
+                    <label for="first-name" class="form-label-auth">Имя</label>
+                    <input type="text" id="first-name" class="form-input" placeholder="Имя" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="reg-login" class="form-label-auth">Логин</label>
+                    <input type="text" id="reg-login" class="form-input" placeholder="Логин" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="email" class="form-label-auth">Электронная почта</label>
+                    <input type="email" id="email" class="form-input" placeholder="Электронная почта" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="reg-password" class="form-label-auth">Пароль</label>
+                    <input type="password" id="reg-password" class="form-input" placeholder="Пароль" required>
+                </div>
+                <div class="form-group-auth">
+                    <label for="confirm-password" class="form-label-auth">Подтверждение пароля</label>
+                    <input type="password" id="confirm-password" class="form-input" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Продолжить</button>
+                <div class="switch-link" id="show-login">Уже есть аккаунт</div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-overlay" id="confirm-logout-modal">
+        <div class="confirm-modal">
+            <div class="modal-header">
+                <h2>ВНИМАНИЕ!</h2>
+                <button class="close-btn" id="close-confirm-logout">&times;</button>
+            </div>
+            <p>Вы уверены, что хотите выйти?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-cancel" id="cancel-logout">ОТМЕНИТЬ</button>
+                <button class="btn btn-confirm" id="confirm-logout">ВЫЙТИ</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="info-modal">
+        <div class="info-modal">
+            <div class="modal-header">
+                <h2>Информация</h2>
+                <button class="close-btn" id="close-info-modal">&times;</button>
+            </div>
+            <p id="info-message">Текст информации</p>
+            <button class="info-button" id="info-ok">ОК</button>
+        </div>
+    </div>
+    <div class="modal-overlay" id="error-modal">
+        <div class="error-modal">
+            <div class="modal-header">
+                <h2>Ошибка!</h2>
+                <button class="close-btn" id="close-error-modal">&times;</button>
+            </div>
+            <p id="error-message">Текст ошибки</p>
+            <button class="error-button" id="error-ok">ОК</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.hostname === 'localhost'
+            ? 'http://localhost:8000'
+            : window.location.origin.replace(/:\d+$/, '') + ':8000';
+
+        // DOM
+        const mainNav = document.getElementById('main-nav');
+        const accountDropdown = document.getElementById('account-dropdown');
+        const accountBtn = document.getElementById('account-btn');
+        const specialtiesList = document.getElementById('specialties-list');
+        const authModal = document.getElementById('auth-modal');
+        const registrationModal = document.getElementById('registration-modal');
+        const confirmLogoutModal = document.getElementById('confirm-logout-modal');
+        const infoModal = document.getElementById('info-modal');
+        const errorModal = document.getElementById('error-modal');
+        const closeAuthModalBtn = document.getElementById('close-auth-modal');
+        const closeRegistrationModalBtn = document.getElementById('close-registration-modal');
+        const closeConfirmLogoutBtn = document.getElementById('close-confirm-logout');
+        const closeInfoModalBtn = document.getElementById('close-info-modal');
+        const closeErrorModalBtn = document.getElementById('close-error-modal');
+        const showRegistrationBtn = document.getElementById('show-registration');
+        const showLoginLink = document.getElementById('show-login');
+        const logoutBtn = document.getElementById('logout-btn');
+        const cancelLogoutBtn = document.getElementById('cancel-logout');
+        const confirmLogoutBtn = document.getElementById('confirm-logout');
+        const infoOkBtn = document.getElementById('info-ok');
+        const errorOkBtn = document.getElementById('error-ok');
+        const infoMessage = document.getElementById('info-message');
+        const errorMessage = document.getElementById('error-message');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+
+        // Утилиты токена
+        function getToken() {
+            return localStorage.getItem('auth_token');
+        }
+        function clearToken() {
+            localStorage.removeItem('auth_token');
+            updateAuthUI();
+        }
+        function setToken(token) {
+            localStorage.setItem('auth_token', token);
+            updateAuthUI();
+        }
+        function getUserInfoFromToken() {
+            const token = getToken();
+            if (!token) return null;
+            try {
+                const payloadBase64 = token.split('.')[1];
+                const payload = JSON.parse(atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/')));
+                return {
+                    role: payload.role || null,
+                    fullName: payload.full_name || null
+                };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function createAdminDropdown() {
+            const container = document.createElement('div');
+            container.className = 'dropdown-container';
+            container.id = 'admin-dropdown';
+            container.innerHTML = `
+                <a href="#" class="nav-link">Администрирование</a>
+                <div class="dropdown-menu">
+                    <a href="administrate_specialization.html" class="dropdown-item" class="page-link">Специальности</a>
+                    <a href="administrate_traits.html" class="dropdown-item" class="page-link">Качества</a>
+                    <a href="administrate_tests.html" class="dropdown-item" class="page-link">Тесты</a>
+                    <a href="administrate_questions.html" class="dropdown-item" class="page-link">Вопросы</a>
+                    <a href="administrate_answeroptions.html" class="dropdown-item" class="page-link">Варианты ответов</a>
+                    <a href="administrate_specializationstraits.html" class="dropdown-item" class="page-link">Требования к качествам</a>
+                    <a href="administrate_sessions.html" class="dropdown-item" class="page-link">Сессии</a>
+                    <a href="administrate_useranswers.html" class="dropdown-item" class="page-link">Ответы пользователей</a>
+                    <a href="administrate_testresults.html" class="dropdown-item" class="page-link">Результаты</a>
+                    <a href="administrate_users.html" class="dropdown-item" class="page-link">Пользователи</a>
+                </div>
+            `;
+            return container;
+        }
+
+        function updateAuthUI() {
+            const token = getToken();
+            const userInfo = getUserInfoFromToken();
+
+            // Обновление кнопки "Личный кабинет"
+            const accountBtn = document.getElementById('account-btn');
+            if (token && userInfo?.fullName) {
+                accountBtn.textContent = `Личный кабинет (${userInfo.fullName})`;
+                accountDropdown.classList.add('authenticated');
+            } else {
+                accountBtn.textContent = 'Личный кабинет';
+                accountDropdown.classList.remove('authenticated');
+            }
+
+            // Администрирование — только если роль подходит
+            const existingAdmin = document.getElementById('admin-dropdown');
+            if (token && (userInfo?.role === 'admin' || userInfo?.role === 'psychologist')) {
+                if (!existingAdmin) {
+                    const specialtiesLink = Array.from(mainNav.children).find(el => el.textContent.trim() === 'Специальности');
+                    if (specialtiesLink) {
+                        mainNav.insertBefore(createAdminDropdown(), specialtiesLink);
+                    } else {
+                        mainNav.appendChild(createAdminDropdown());
+                    }
+                }
+            } else {
+                if (existingAdmin) {
+                    existingAdmin.remove();
+                }
+            }
+        }
+
+        function renderSpecializations(specializations) {
+            if (!Array.isArray(specializations) || specializations.length === 0) {
+                specialtiesList.innerHTML = '<p style="text-align:center;color:#666;">Специальности пока не добавлены</p>';
+                return;
+            }
+            specialtiesList.innerHTML = '';
+            specializations.forEach(spec => {
+                const desc = spec.description || 'Описание отсутствует.';
+                const paragraphs = desc.split('\n').map(p => p.trim()).filter(p => p).map(p => `<p>${p}</p>`).join('\n');
+                const item = document.createElement('div');
+                item.className = 'specialty-item';
+                item.innerHTML = `
+                    <div class="specialty-header">
+                        <div class="toggle-icon"></div>
+                        <span class="specialty-name">${spec.name}</span>
+                    </div>
+                    <div class="specialty-description">
+                        ${paragraphs}
+                    </div>
+                `;
+                specialtiesList.appendChild(item);
+            });
+            initializeSpecialties();
+        }
+
+        async function fetchSpecializations() {
+            try {
+                const response = await fetch(`${API_BASE}/specializations/`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        ...(getToken() ? { 'Authorization': 'Bearer ' + getToken() } : {})
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    renderSpecializations(data);
+                } else {
+                    const error = await response.json().catch(() => ({}));
+                    specialtiesList.innerHTML = `<p style="text-align:center;color:red;">Ошибка загрузки: ${error.detail || 'Неизвестная ошибка'}</p>`;
+                }
+            } catch (err) {
+                specialtiesList.innerHTML = `<p style="text-align:center;color:red;">Ошибка сети: не удаётся подключиться к серверу</p>`;
+            }
+        }
+
+        function initializeSpecialties() {
+            document.querySelectorAll('.specialty-header').forEach(header => {
+                header.addEventListener('click', function () {
+                    const description = this.nextElementSibling;
+                    const toggleIcon = this.querySelector('.toggle-icon');
+                    document.querySelectorAll('.specialty-description').forEach(desc => {
+                        if (desc !== description) desc.style.display = 'none';
+                    });
+                    document.querySelectorAll('.specialty-header').forEach(h => {
+                        if (h !== this) h.classList.remove('active');
+                    });
+                    if (description.style.display === 'block') {
+                        description.style.display = 'none';
+                        this.classList.remove('active'); // ← убираем класс → стрелка возвращается
+                    } else {
+                        // Сначала закрываем другие
+                        document.querySelectorAll('.specialty-description').forEach(desc => {
+                            desc.style.display = 'none';
+                        });
+                        document.querySelectorAll('.specialty-header').forEach(h => {
+                            h.classList.remove('active');
+                        });
+                        // Открываем текущее
+                        description.style.display = 'block';
+                        this.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // === Модальные окна (без изменений) ===
+        function openAuthModal() {
+            authModal.style.display = 'flex';
+            setTimeout(() => authModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeAuthModal() {
+            authModal.classList.remove('active');
+            setTimeout(() => {
+                authModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openRegistrationModal() {
+            registrationModal.style.display = 'flex';
+            setTimeout(() => registrationModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeRegistrationModal() {
+            registrationModal.classList.remove('active');
+            setTimeout(() => {
+                registrationModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openConfirmLogoutModal() {
+            confirmLogoutModal.style.display = 'flex';
+            setTimeout(() => confirmLogoutModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeConfirmLogoutModal() {
+            confirmLogoutModal.classList.remove('active');
+            setTimeout(() => {
+                confirmLogoutModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openInfoModal(message) {
+            infoMessage.textContent = message;
+            infoModal.style.display = 'flex';
+            setTimeout(() => infoModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeInfoModal() {
+            infoModal.classList.remove('active');
+            setTimeout(() => {
+                infoModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        function openErrorModal(message) {
+            errorMessage.textContent = message;
+            errorModal.style.display = 'flex';
+            setTimeout(() => errorModal.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeErrorModal() {
+            errorModal.classList.remove('active');
+            setTimeout(() => {
+                errorModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        // Обработчики кнопок
+        accountBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (!getToken()) openAuthModal();
+        });
+
+        [closeAuthModalBtn, closeRegistrationModalBtn, closeConfirmLogoutBtn, closeInfoModalBtn, closeErrorModalBtn]
+            .forEach(btn => btn.addEventListener('click', () => {
+                const id = btn.id;
+                if (id.includes('auth')) closeAuthModal();
+                else if (id.includes('registration')) closeRegistrationModal();
+                else if (id.includes('confirm-logout')) closeConfirmLogoutModal();
+                else if (id.includes('info')) closeInfoModal();
+                else if (id.includes('error')) closeErrorModal();
+            }));
+
+        showRegistrationBtn.addEventListener('click', e => {
+            e.preventDefault();
+            closeAuthModal();
+            setTimeout(openRegistrationModal, 300);
+        });
+
+        showLoginLink.addEventListener('click', e => {
+            e.preventDefault();
+            closeRegistrationModal();
+            setTimeout(openAuthModal, 300);
+        });
+
+        logoutBtn.addEventListener('click', e => {
+            e.preventDefault();
+            openConfirmLogoutModal();
+        });
+
+        cancelLogoutBtn.addEventListener('click', e => {
+            e.preventDefault();
+            closeConfirmLogoutModal();
+        });
+
+        confirmLogoutBtn.addEventListener('click', e => {
+            e.preventDefault();
+            clearToken();
+            window.location.href = 'index.html';
+            window.history.replaceState(null, '', 'index.html');
+        });
+
+        infoOkBtn.addEventListener('click', closeInfoModal);
+        errorOkBtn.addEventListener('click', closeErrorModal);
+
+        [authModal, registrationModal, confirmLogoutModal, infoModal, errorModal].forEach(modal => {
+            modal.addEventListener('mousedown', e => {
+                if (e.target === modal) {
+                    const actions = {
+                        'auth-modal': closeAuthModal,
+                        'registration-modal': closeRegistrationModal,
+                        'confirm-logout-modal': closeConfirmLogoutModal,
+                        'info-modal': closeInfoModal,
+                        'error-modal': closeErrorModal
+                    };
+                    actions[modal.id]();
+                }
+            });
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key !== 'Escape') return;
+            const modals = [
+                { el: authModal, close: closeAuthModal },
+                { el: registrationModal, close: closeRegistrationModal },
+                { el: confirmLogoutModal, close: closeConfirmLogoutModal },
+                { el: infoModal, close: closeInfoModal },
+                { el: errorModal, close: closeErrorModal }
+            ];
+            for (const { el, close } of modals) {
+                if (el.classList.contains('active')) {
+                    close();
+                    break;
+                }
+            }
+        });
+
+        // === API ===
+        loginForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const login = document.getElementById('login').value.trim();
+            const password = document.getElementById('password').value;
+            try {
+                const response = await fetch(`${API_BASE}/auth/token`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        username: login,
+                        password: password,
+                        grant_type: 'password'
+                    })
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setToken(data.access_token);
+                    closeAuthModal();
+                    openInfoModal("Вы успешно вошли в систему!");
+                } else {
+                    const err = await response.json().catch(() => ({}));
+                    openErrorModal(err.detail || "Ошибка авторизации");
+                }
+            } catch (error) {
+                openErrorModal("Ошибка соединения с сервером");
+            }
+        });
+
+        registerForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const firstName = document.getElementById('first-name').value.trim();
+            const login = document.getElementById('reg-login').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            if (password !== confirmPassword) {
+                openErrorModal("Пароли не совпадают");
+                return;
+            }
+            try {
+                const userData = {
+                    full_name: firstName,
+                    login: login,
+                    email: email,
+                    password: password
+                };
+                const response = await fetch(`${API_BASE}/users/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+                if (response.ok) {
+                    closeRegistrationModal();
+                    openInfoModal("Вы успешно зарегистрировались! Теперь вы можете войти в систему.");
+                } else {
+                    const err = await response.json().catch(() => ({}));
+                    openErrorModal(err.detail || "Ошибка регистрации");
+                }
+            } catch (error) {
+                openErrorModal("Ошибка соединения с сервером");
+            }
+        });
+
+        // === Инициализация ===
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+            fetchSpecializations();
+        });
+    </script>
+</body>
+
+</html>
